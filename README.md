@@ -14,11 +14,25 @@ Integrantes
 Pantallas previstas
 -------------------
 
-- Pantalla de inicio / Lista de tareas (principal)
+- Pantalla de inicio 
+(
+    - Header: Hola {usuario}, barra de busqueda de tarea, menú (nombre App, navbar a crear tarea, ver tarea y botón de cambio de theme) y botón de notis 
+    - Main: Flatlist de tareas (últimas 5-7 tareas a vencer) - Encima del flatlist botón ir a tareas - botón a screen crear tarea
+    - Barra de nav inferior: botón para volver a la pantalla de inicio (Home) y para navegar hacia la screen de la lista completa de tareas.
+)
+- Pantalla de tareas
+(
+    Header: Se mantiene el mismo que en la de inicio
+    Main: Flatlist con la lista total de tareas, agregar filtro para aplicar a la lista de tareas, botón a un lado de cada tarea para editarlas, botón para alternar el estado de las tareas y/o eliminarlas.
+)
 - Pantalla de detalle de tarea
+(
+
+)
 - Pantalla de creación/edición de tarea
-- Pantalla de ajustes / preferencias
-- Pantalla de login / perfil (si aplica)
+- Pantalla de ajustes (cambio de tema y de nombre de usuario)
+- Pantalla de login / perfil (meramente visual, sin funcionalidades)
+- Pantalla de registro (meramente visual, sin funcionalidades)
 
 Funcionalidades básicas previstas
 ---------------------------------
