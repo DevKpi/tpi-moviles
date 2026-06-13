@@ -54,14 +54,17 @@ o si usas yarn:
 Poner en funcionamiento el proyecto
 ----------------------------------
 
-- El siguiente proyecto está desarrollado con Expo por lo que los comandos para iniciarlo son los siguientes:
+- El siguiente proyecto está desarrollado con Expo, por lo que los comandos para iniciarlo son los siguientes:
 
-  npx expo start -c 
+```bash
+npx expo start -c
+```
 
-  ó
+ó
 
-  npx expo start
-
+```bash
+npx expo start
+```
 
 Notas
 -----
