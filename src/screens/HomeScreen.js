@@ -8,6 +8,11 @@ export default function HomeScreen({ navigation }) {
             
             <Text>Home Screen</Text>
 
+            <Button
+                title="Ver todas las tareas"
+                onPress={() => navigation.navigate('Tasks')}
+            />
+
         </View>
     );
 }

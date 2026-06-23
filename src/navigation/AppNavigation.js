@@ -21,7 +21,7 @@ return (
 
 
         <Stack.Screen
-          name="Task"
+          name="Tasks"
           component={TaskScreen}
         />
 
