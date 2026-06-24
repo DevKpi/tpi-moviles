@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,53 +7,18 @@ import {
   StyleSheet,
 } from 'react-native';
 import Header from '../components/Header';
-
-const TASKS = [
-  {
-    id: '1',
-    title: 'Revisar propuesta de diseño',
-    dueDate: '2026-06-24',
-    priority: 'Alta',
-    completed: false,
-  },
-  {
-    id: '2',
-    title: 'Enviar informe de progreso',
-    dueDate: '2026-06-25',
-    priority: 'Media',
-    completed: false,
-  },
-  {
-    id: '3',
-    title: 'Diseñar pantalla de detalle',
-    dueDate: '2026-06-26',
-    priority: 'Alta',
-    completed: false,
-  },
-  {
-    id: '4',
-    title: 'Probar navegación',
-    dueDate: '2026-06-27',
-    priority: 'Baja',
-    completed: false,
-  },
-  {
-    id: '5',
-    title: 'Actualizar README',
-    dueDate: '2026-06-28',
-    priority: 'Media',
-    completed: false,
-  },
-];
+import { TaskContext } from '../context/TaskContext';
+import Task from '../components/Task';
 
 export default function HomeScreen({ navigation }) {
   const [searchText, setSearchText] = useState('');
+  const { tasks, toggleTaskCompleted, deleteTask } = useContext(TaskContext);
 
   const filteredTasks = useMemo(() => {
-    return TASKS.filter(task =>
+    return tasks.filter(task =>
       task.title.toLowerCase().includes(searchText.toLowerCase())
-    ).slice(0, 7);
-  }, [searchText]);
+    ).slice(0, 5);
+  }, [searchText, tasks]);
 
   return (
     <View style={styles.container}>
@@ -91,14 +56,18 @@ export default function HomeScreen({ navigation }) {
           data={filteredTasks}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <View style={styles.taskCard}>
-              <Text style={styles.taskTitle}>{item.title}</Text>
-              <Text style={styles.taskMeta}>
-                Vence: {item.dueDate} · {item.priority}
-              </Text>
-            </View>
+            <Task 
+              task={item} 
+              onToggleCompleted={toggleTaskCompleted}
+              onDelete={deleteTask}
+            />
           )}
           contentContainerStyle={styles.listContent}
+          ListEmptyComponent={
+            <Text style={{ textAlign: 'center', marginTop: 20, color: '#6b7280' }}>
+              No hay tareas recientes.
+            </Text>
+          }
         />
       </View>
 

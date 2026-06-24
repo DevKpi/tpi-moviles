@@ -1,37 +1,53 @@
-import { View, Text, Button, FlatList } from 'react-native';
-import { styles } from '../styles/theme-taskscreen';
-
-const productos = [
-    { id: '1', nombre: 'Mouse Gamer', precio: 15000 },
-    { id: '2', nombre: 'Teclado Mecánico', precio: 45000 },
-    { id: '3', nombre: 'Monitor', precio: 120000 },
-];
-
+import React, { useContext } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { TaskContext } from '../context/TaskContext';
+import Task from '../components/Task';
 
 export default function TaskScreen() {
+    const { tasks, toggleTaskCompleted, deleteTask } = useContext(TaskContext);
+
     return (
-        <View>
-            <Text>Pantalla de lista de Tareas</Text>
-
-            <Button
-                title="Ver tarea"
-                onPress={() => navigation.navigate('TaskDetail')}
-            />
-
-            <View style={styles.container}>
+        <View style={styles.container}>
+            {tasks.length === 0 ? (
+                <View style={styles.emptyContainer}>
+                    <Text style={styles.emptyText}>No hay tareas todavía. ¡Crea una!</Text>
+                </View>
+            ) : (
                 <FlatList
-                    data={productos}
+                    data={tasks}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View style={styles.card}>
-                            <Text style={styles.nombre}>{item.nombre}</Text>
-                            <Text>${item.precio}</Text>
-                        </View>
+                        <Task 
+                            task={item} 
+                            onToggleCompleted={toggleTaskCompleted}
+                            onDelete={deleteTask}
+                        />
                     )}
+                    contentContainerStyle={styles.listContent}
                 />
-            </View>
-
-
+            )}
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#f8fafc',
+    },
+    listContent: {
+        padding: 16,
+        paddingBottom: 80,
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    emptyText: {
+        fontSize: 16,
+        color: '#6b7280',
+        textAlign: 'center',
+    }
+});
