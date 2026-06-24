@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../screens/HomeScreen'
 import TaskScreen from '../screens/TaskScreen';
+import TaskDetail from '../screens/TaskDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,10 @@ return (
           component={TaskScreen}
         />
 
+        <Stack.Screen
+          name="TaskDetail"
+          component={TaskDetail}
+        />
 
       </Stack.Navigator>
 
