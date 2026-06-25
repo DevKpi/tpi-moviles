@@ -1,11 +1,6 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function Header({
   userName = 'Usuario',
@@ -13,32 +8,33 @@ export default function Header({
   onSearchChange = () => {},
   onPressCreateTask = () => {},
   onPressViewTasks = () => {},
-  onPressToggleTheme = () => {},
   onPressNotifications = () => {},
   appName = 'App Tareas',
 }) {
+  const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
+
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
       <View style={styles.appRow}>
-        <Text style={styles.appName}>{appName}</Text>
+        <Text style={[styles.appName, { color: colors.text }]}>{appName}</Text>
 
         <TouchableOpacity
-          style={styles.iconButton}
+          style={[styles.iconButton, { backgroundColor: colors.background }]}
           onPress={onPressNotifications}
         >
           <Text style={styles.iconText}>🔔</Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.greeting}>Hola {userName}</Text>
+      <Text style={[styles.greeting, { color: colors.text }]}>Hola {userName}</Text>
 
       <View style={styles.searchContainer}>
         <TextInput
           value={searchValue}
           onChangeText={onSearchChange}
           placeholder="Buscar tarea"
-          placeholderTextColor="#999"
-          style={styles.searchInput}
+          placeholderTextColor={colors.textSecondary}
+          style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
         />
       </View>
 
@@ -51,8 +47,8 @@ export default function Header({
           <Text style={styles.navButtonText}>Ver tareas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navButton} onPress={onPressToggleTheme}>
-          <Text style={styles.navButtonText}>Theme</Text>
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: isDarkMode ? '#4b5563' : '#1f2937' }]} onPress={toggleTheme}>
+          <Text style={styles.navButtonText}>{isDarkMode ? 'Tema Claro' : 'Tema Oscuro'}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -64,9 +60,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     paddingBottom: 18,
-    backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e5e5',
   },
   appRow: {
     flexDirection: 'row',
@@ -76,13 +70,11 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111',
   },
   iconButton: {
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: '#f2f2f7',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -93,18 +85,15 @@ const styles = StyleSheet.create({
     marginTop: 14,
     fontSize: 22,
     fontWeight: '700',
-    color: '#111',
   },
   searchContainer: {
     marginTop: 14,
   },
   searchInput: {
     height: 44,
-    backgroundColor: '#f2f2f7',
     borderRadius: 14,
     paddingHorizontal: 14,
     fontSize: 16,
-    color: '#111',
   },
   navRow: {
     marginTop: 14,

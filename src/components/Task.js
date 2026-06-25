@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function Task({ task, onToggleCompleted, onDelete }) {
+  const { colors } = useContext(ThemeContext);
+
   const handleLongPress = () => {
     Alert.alert(
       "Eliminar Tarea",
@@ -15,17 +18,29 @@ export default function Task({ task, onToggleCompleted, onDelete }) {
 
   return (
     <TouchableOpacity 
-      style={[styles.taskCard, task.completed && styles.taskCardCompleted]}
+      style={[
+        styles.taskCard, 
+        { backgroundColor: colors.card, shadowColor: colors.text },
+        task.completed && { backgroundColor: colors.completedCard, opacity: 0.6 }
+      ]}
       onPress={() => onToggleCompleted(task.id)}
       onLongPress={handleLongPress}
       activeOpacity={0.7}
     >
       <View style={styles.taskInfo}>
-        <Text style={[styles.taskTitle, task.completed && styles.taskTitleCompleted]}>
+        <Text style={[
+            styles.taskTitle, 
+            { color: colors.text },
+            task.completed && { textDecorationLine: 'line-through', color: colors.textSecondary }
+        ]}>
           {task.title}
         </Text>
         {task.description ? (
-          <Text style={[styles.taskMeta, task.completed && styles.taskMetaCompleted]}>
+          <Text style={[
+              styles.taskMeta, 
+              { color: colors.textSecondary },
+              task.completed && { color: colors.textSecondary }
+          ]}>
             {task.description}
           </Text>
         ) : null}
@@ -36,18 +51,12 @@ export default function Task({ task, onToggleCompleted, onDelete }) {
 
 const styles = StyleSheet.create({
   taskCard: {
-    backgroundColor: '#fff',
     borderRadius: 16,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
     shadowOpacity: 0.04,
     shadowRadius: 10,
     elevation: 2,
-  },
-  taskCardCompleted: {
-    backgroundColor: '#f8fafc',
-    opacity: 0.8,
   },
   taskInfo: {
     flex: 1,
@@ -56,17 +65,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 4,
-    color: '#111827',
-  },
-  taskTitleCompleted: {
-    textDecorationLine: 'line-through',
-    color: '#9ca3af',
   },
   taskMeta: {
-    color: '#6b7280',
     fontSize: 14,
-  },
-  taskMetaCompleted: {
-    color: '#9ca3af',
   }
 });
