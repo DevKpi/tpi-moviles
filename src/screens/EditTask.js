@@ -70,5 +70,11 @@ const styles = StyleSheet.create({
   input: { padding: 14, borderRadius: 12, borderWidth: 1, fontSize: 16, marginBottom: 12 },
   textArea: { height: 100, textAlignVertical: 'top' },
   saveButton: { backgroundColor: '#10b981', paddingVertical: 14, borderRadius: 12, alignItems: 'center', marginTop: 20 },
-  saveButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
+  saveButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  subButton: {
+  paddingVertical: 16,
+  borderRadius: 14,
+  alignItems: 'center',
+  marginTop: 16,
+},
 });
