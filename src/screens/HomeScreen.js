@@ -1,14 +1,53 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import { TaskContext } from '../context/TaskContext';
 import { ThemeContext } from '../context/ThemeContext';
 import Task from '../components/Task';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PopUpLogin from './PopUpLogin';
+
+
 
 export default function HomeScreen({ navigation }) {
   const [searchText, setSearchText] = useState('');
   const { tasks, toggleTaskCompleted, deleteTask } = useContext(TaskContext);
   const { colors, isDarkMode } = useContext(ThemeContext);
+  const [userName, setUserName] = useState('Usuario');
+  const [nameModalVisible, setNameModalVisible] = useState(false);
+  const [nameInput, setNameInput] = useState('');
+
+  useEffect(() => {
+  const loadUserName = async () => {
+    try {
+      const storedName = await AsyncStorage.getItem('@userName');
+      if (storedName) {
+        setUserName(storedName);
+      } else {
+        setNameModalVisible(true);
+      }
+    } catch (e) {
+      console.error('Error cargando nombre', e);
+    }
+  };
+
+  loadUserName();
+}, []);
+
+
+const handleSaveName = async () => {
+  const trimmedName = nameInput.trim();
+  if (!trimmedName) return;
+
+  try {
+    await AsyncStorage.setItem('@userName', trimmedName);
+    setUserName(trimmedName);
+    setNameModalVisible(false);
+    setNameInput('');
+  } catch (e) {
+    console.error('Error guardando nombre', e);
+  }
+};
 
   const filteredTasks = useMemo(() => {
     return tasks.filter(task =>
@@ -19,7 +58,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header
-        userName="Usuario"
+        userName={userName}
         appName="App Tareas"
         searchValue={searchText}
         onSearchChange={setSearchText}
@@ -27,6 +66,12 @@ export default function HomeScreen({ navigation }) {
         onPressViewTasks={() => navigation.navigate('Tasks')}
         onPressNotifications={() => {}}
       />
+          <PopUpLogin
+      visible={nameModalVisible}
+      name={nameInput}
+      setName={setNameInput}
+      onSave={handleSaveName}
+    />
 
       <View style={styles.main}>
         <View style={styles.buttonRow}>
