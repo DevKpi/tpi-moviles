@@ -30,19 +30,19 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.main}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.primaryButton}
             onPress={() => navigation.navigate('AddTask')}
           >
             <Text style={styles.buttonText}>Crear tarea</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.secondaryButton, { backgroundColor: isDarkMode ? '#374151' : '#e2e8f0' }]}
             onPress={() => navigation.navigate('Tasks')}
           >
             <Text style={[styles.secondaryButtonText, { color: colors.text }]}>Ir a tareas</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Próximas tareas</Text>
