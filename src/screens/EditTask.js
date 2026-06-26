@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { TaskContext } from '../context/TaskContext';
 import { ThemeContext } from '../context/ThemeContext';
+import PopUpSub from './PopUpSub';
 
 export default function EditTask({ route, navigation }) {
   const { task } = route.params; // Recibimos la tarea original
   const { updateTask } = useContext(TaskContext);
   const { colors } = useContext(ThemeContext);
-
+  const [subModalVisible, setSubModalVisible] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description || '');
 
@@ -49,10 +50,16 @@ export default function EditTask({ route, navigation }) {
         multiline
         numberOfLines={4}
       />
-
+      <TouchableOpacity
+  style={[styles.subButton, { backgroundColor: '#8b5cf6' }]}
+  onPress={() => setSubModalVisible(true)}
+>
+  <Text style={styles.saveButtonText}>Adjuntar Archivos</Text>
+</TouchableOpacity>
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
         <Text style={styles.saveButtonText}>Guardar Cambios</Text>
       </TouchableOpacity>
+      <PopUpSub visible={subModalVisible} onClose={() => setSubModalVisible(false)} />
     </View>
   );
 }
