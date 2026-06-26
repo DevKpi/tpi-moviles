@@ -35,15 +35,14 @@ Pantallas previstas
     Header
     Main: campos a completar/editar (nombre tarea, descripción, estado [toda tarea nueva tiene por default pendiente], fecha de vencimiento, prioridad/importancia).
 )
-- Pantalla de ajustes (cambio de tema y de nombre de usuario)
+- PopUp de ajustes (cambio de tema y de nombre de usuario)
 (
     Header
     Main: botones de cambio de tema y campo de edición de nombre de usuario
 )
-- Pantalla de login / perfil (meramente visual, sin funcionalidades)
+- PopUp de login / nombre (meramente visual, sin funcionalidades)
 (
-    Header: Logo y/o nombre de la App
-    Main: Campo de ingreso de nombre/mail y password, botón "Ingresar"
+    Ingreso nombre guardo en asyncstorage.
 )
 - Pantalla de registro (meramente visual, sin funcionalidades)
 (
@@ -53,6 +52,8 @@ Pantallas previstas
 
 - PopUp de Suscripción(
     Boton de adjuntar archivos en la tarjeta de tareas onPress ScreenSub
+    en AddTask & EditTask.
+    Adjuntar / vincular con claude
 )
 
 Funcionalidades básicas previstas
