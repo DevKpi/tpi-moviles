@@ -55,6 +55,8 @@ export default function HomeScreen({ navigation }) {
               task={item} 
               onToggleCompleted={toggleTaskCompleted}
               onDelete={deleteTask}
+              // Agregamos esta línea para navegar al detalle y enviarle la tarea
+              onPressDetail={() => navigation.navigate('TaskDetail', { task: item })}
             />
           )}
           contentContainerStyle={styles.listContent}

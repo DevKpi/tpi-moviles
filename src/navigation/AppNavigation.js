@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen'
 import TaskScreen from '../screens/TaskScreen';
 import TaskDetail from '../screens/TaskDetail';
 import AddTask from '../screens/AddTask';
+import EditTask from '../screens/EditTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,13 @@ return (
           component={AddTask}
           options={{ title: 'Crear Tarea' }}
         />
+
+        <Stack.Screen 
+          name="EditTask" 
+          component={EditTask} 
+          options={{ title: 'Editar Tarea' }} 
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
     );

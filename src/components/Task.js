@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { ThemeContext } from '../context/ThemeContext';
 
-export default function Task({ task, onToggleCompleted, onDelete }) {
+export default function Task({ task, onToggleCompleted, onDelete, onPressDetail }) {
   const { colors } = useContext(ThemeContext);
 
   const handleLongPress = () => {
@@ -27,23 +27,37 @@ export default function Task({ task, onToggleCompleted, onDelete }) {
       onLongPress={handleLongPress}
       activeOpacity={0.7}
     >
-      <View style={styles.taskInfo}>
-        <Text style={[
-            styles.taskTitle, 
-            { color: colors.text },
-            task.completed && { textDecorationLine: 'line-through', color: colors.textSecondary }
-        ]}>
-          {task.title}
-        </Text>
-        {task.description ? (
+      <View style={styles.taskContainer}>
+        {/* Contenedor de Textos */}
+        <View style={styles.taskInfo}>
           <Text style={[
-              styles.taskMeta, 
-              { color: colors.textSecondary },
-              task.completed && { color: colors.textSecondary }
+              styles.taskTitle, 
+              { color: colors.text },
+              task.completed && { textDecorationLine: 'line-through', color: colors.textSecondary }
           ]}>
-            {task.description}
+            {task.title}
           </Text>
-        ) : null}
+          {task.description ? (
+            <Text 
+              style={[
+                styles.taskMeta, 
+                { color: colors.textSecondary },
+                task.completed && { color: colors.textSecondary }
+              ]}
+              numberOfLines={1} // Limita a 1 línea en la lista para no romper el diseño
+            >
+              {task.description}
+            </Text>
+          ) : null}
+        </View>
+
+        {/* Nuevo botón para ir al Detalle */}
+        <TouchableOpacity 
+          style={[styles.detailButton, { backgroundColor: '#3b82f6' }]} // Puedes usar colors.primary si lo tienes
+          onPress={onPressDetail}
+        >
+          <Text style={styles.detailButtonText}>Detalles</Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -58,8 +72,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 2,
   },
+  taskContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   taskInfo: {
     flex: 1,
+    marginRight: 12, // Espacio entre el texto y el botón
   },
   taskTitle: {
     fontSize: 16,
@@ -68,5 +88,15 @@ const styles = StyleSheet.create({
   },
   taskMeta: {
     fontSize: 14,
+  },
+  detailButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  detailButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   }
 });

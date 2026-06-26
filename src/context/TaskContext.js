@@ -56,8 +56,14 @@ export const TaskProvider = ({ children }) => {
     saveTasks(newTasks);
   };
 
+  const updateTask = (id, updatedFields) => {
+  setTasks(prevTasks =>
+    prevTasks.map(task => (task.id === id ? { ...task, ...updatedFields } : task))
+  );
+};
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, toggleTaskCompleted, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, toggleTaskCompleted, deleteTask, updateTask }}>
       {children}
     </TaskContext.Provider>
   );
