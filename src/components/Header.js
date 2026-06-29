@@ -9,6 +9,7 @@ export default function Header({
   onPressCreateTask = () => {},
   onPressViewTasks = () => {},
   onPressNotifications = () => {},
+  onPressConfig = () => {},
   appName = 'App Tareas',
 }) {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
@@ -18,12 +19,20 @@ export default function Header({
       <View style={styles.appRow}>
         <Text style={[styles.appName, { color: colors.text }]}>{appName}</Text>
 
-        <TouchableOpacity
-          style={[styles.iconButton, { backgroundColor: colors.background }]}
-          onPress={onPressNotifications}
-        >
-          <Text style={styles.iconText}>🔔</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <TouchableOpacity
+            style={[styles.iconButton, { backgroundColor: colors.background }]}
+            onPress={onPressConfig}
+          >
+            <Text style={styles.iconText}>⚙️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.iconButton, { backgroundColor: colors.background }]}
+            onPress={onPressNotifications}
+          >
+            <Text style={styles.iconText}>🔔</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Text style={[styles.greeting, { color: colors.text }]}>Hola {userName}</Text>
@@ -45,10 +54,6 @@ export default function Header({
 
         <TouchableOpacity style={styles.navButton} onPress={onPressViewTasks}>
           <Text style={styles.navButtonText}>Ver tareas</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.navButton, { backgroundColor: isDarkMode ? '#4b5563' : '#1f2937' }]} onPress={toggleTheme}>
-          <Text style={styles.navButtonText}>{isDarkMode ? 'Tema Claro' : 'Tema Oscuro'}</Text>
         </TouchableOpacity>
       </View>
     </View>

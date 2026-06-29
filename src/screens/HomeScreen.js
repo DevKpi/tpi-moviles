@@ -6,6 +6,8 @@ import { ThemeContext } from '../context/ThemeContext';
 import Task from '../components/Task';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PopUpLogin from './PopUpLogin';
+import PopUpConfig from './PopUpConfig';
+
 
 
 
@@ -16,6 +18,8 @@ export default function HomeScreen({ navigation }) {
   const [userName, setUserName] = useState('Usuario');
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const [configModalVisible, setConfigModalVisible] = useState(false);
+  const [configNameInput, setConfigNameInput] = useState('');
 
   useEffect(() => {
   const loadUserName = async () => {
@@ -49,6 +53,19 @@ const handleSaveName = async () => {
   }
 };
 
+const handleSaveConfigName = async () => {
+  const trimmedName = configNameInput.trim();
+  if (!trimmedName) return;
+
+  try {
+    await AsyncStorage.setItem('@userName', trimmedName);
+    setUserName(trimmedName);
+    setConfigModalVisible(false);
+  } catch (e) {
+    console.error('Error guardando nombre desde config', e);
+  }
+};
+
   const filteredTasks = useMemo(() => {
     return tasks.filter(task =>
       task.title.toLowerCase().includes(searchText.toLowerCase())
@@ -65,12 +82,23 @@ const handleSaveName = async () => {
         onPressCreateTask={() => navigation.navigate('AddTask')}
         onPressViewTasks={() => navigation.navigate('Tasks')}
         onPressNotifications={() => {}}
+        onPressConfig={() => {
+          setConfigNameInput(userName);
+          setConfigModalVisible(true);
+        }}
       />
           <PopUpLogin
       visible={nameModalVisible}
       name={nameInput}
       setName={setNameInput}
       onSave={handleSaveName}
+    />
+    <PopUpConfig
+      visible={configModalVisible}
+      onClose={() => setConfigModalVisible(false)}
+      name={configNameInput}
+      setName={setConfigNameInput}
+      onSave={handleSaveConfigName}
     />
 
       <View style={styles.main}>
