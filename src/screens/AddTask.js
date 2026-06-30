@@ -7,6 +7,7 @@ import PopUpSub from './PopUpSub';
 export default function AddTask({ navigation }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState('Media');
   const { addTask } = useContext(TaskContext);
   const { colors, isDarkMode } = useContext(ThemeContext);
   const [subModalVisible, setSubModalVisible] = useState(false);
@@ -16,7 +17,7 @@ export default function AddTask({ navigation }) {
       Alert.alert('Error', 'Por favor ingresa un título para la tarea.');
       return;
     }
-    addTask(title, description);
+    addTask(title, description, priority);
     navigation.goBack();
   };
 
@@ -41,6 +42,22 @@ export default function AddTask({ navigation }) {
         multiline
         numberOfLines={4}
       />
+      
+      <Text style={[styles.label, { color: colors.text }]}>Prioridad</Text>
+      <View style={styles.priorityContainer}>
+        {['Baja', 'Media', 'Alta'].map(p => (
+          <TouchableOpacity 
+            key={p} 
+            style={[styles.priorityButton, priority === p && styles[`priority${p}`]]}
+            onPress={() => setPriority(p)}
+          >
+            <Text style={[styles.priorityText, priority === p && {color: '#fff'}]}>
+              {p === 'Alta' ? '🔴 Alta' : p === 'Media' ? '🟡 Media' : '🔵 Baja'}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <TouchableOpacity
           style={[styles.subButton, { backgroundColor: '#8b5cf6' }]}
           onPress={() => setSubModalVisible(true)}
@@ -81,4 +98,10 @@ const styles = StyleSheet.create({
   alignItems: 'center',
   marginTop: 16,
 },
+  priorityContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
+  priorityButton: { flex: 1, paddingVertical: 10, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, alignItems: 'center', marginHorizontal: 4 },
+  priorityText: { fontWeight: '600', color: '#666' },
+  priorityBaja: { backgroundColor: '#3b82f6', borderColor: 'transparent' },
+  priorityMedia: { backgroundColor: '#f59e0b', borderColor: 'transparent' },
+  priorityAlta: { backgroundColor: '#ef4444', borderColor: 'transparent' },
 });

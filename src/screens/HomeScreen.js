@@ -67,9 +67,11 @@ const handleSaveConfigName = async () => {
 };
 
   const filteredTasks = useMemo(() => {
-    return tasks.filter(task =>
-      task.title.toLowerCase().includes(searchText.toLowerCase())
-    ).slice(0, 5);
+    const priorityValues = { 'Alta': 3, 'Media': 2, 'Baja': 1 };
+    return [...tasks]
+      .filter(task => task.title.toLowerCase().includes(searchText.toLowerCase()))
+      .sort((a, b) => (priorityValues[b.priority] || 2) - (priorityValues[a.priority] || 2))
+      .slice(0, 5);
   }, [searchText, tasks]);
 
   return (

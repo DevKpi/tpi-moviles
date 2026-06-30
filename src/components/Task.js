@@ -35,7 +35,7 @@ export default function Task({ task, onToggleCompleted, onDelete, onPressDetail 
               { color: colors.text },
               task.completed && { textDecorationLine: 'line-through', color: colors.textSecondary }
           ]}>
-            {task.title}
+            {task.priority === 'Alta' ? '🔴 ' : task.priority === 'Baja' ? '🔵 ' : '🟡 '}{task.title}
           </Text>
           {task.description ? (
             <Text 

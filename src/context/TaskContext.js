@@ -29,11 +29,12 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const addTask = (title, description) => {
+  const addTask = (title, description, priority = 'Media') => {
     const newTask = {
       id: Date.now().toString(),
       title,
       description: description || '',
+      priority,
       completed: false,
       createdAt: new Date().toISOString()
     };

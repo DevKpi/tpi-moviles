@@ -52,6 +52,11 @@ export default function TaskDetail({ route, navigation }) {
         <Text style={[styles.status, { color: task.completed ? '#10b981' : '#f59e0b' }]}>
           {task.completed ? "Completada ✅" : "Pendiente ⏳"}
         </Text>
+        
+        <Text style={[styles.label, { color: colors.textSecondary }]}>Prioridad:</Text>
+        <Text style={[styles.status, { color: colors.text }]}>
+          {task.priority === 'Alta' ? '🔴 Alta' : task.priority === 'Baja' ? '🔵 Baja' : '🟡 Media'}
+        </Text>
       </View>
 
       <View style={styles.buttonRow}>
